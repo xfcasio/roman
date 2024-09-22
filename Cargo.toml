@@ -1,0 +1,14 @@
+[package]
+name = "roman"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies.avr-device]
+version = "0.5.3"
+features = ["atmega328p", "rt"]
+
+[profile.release]
+panic = "abort"
+opt-level = 'z'
+lto = true
+strip = true
