@@ -1,20 +1,17 @@
 #![no_std]
 #![no_main]
 
-use core::panic::PanicInfo;
+use panic_halt as _;
 
-#[avr_device::entry]
+#[arduino_hal::entry]
 fn main() -> ! {
-    unsafe { 
-        core::ptr::write_volatile(0x24 as *mut u8, 1 << 5);
+    let dp = arduino_hal::Peripherals::take().unwrap();
+    let pins = arduino_hal::pins!(dp);
 
-        loop {
-            core::ptr::write_volatile(0x25 as *mut u8, 1 << 5);
-        }
+    let mut led = pins.d13.into_output();
+
+    loop {
+        led.toggle();
+        arduino_hal::delay_ms(1000);
     }
-}
-
-#[panic_handler]
-fn panic(_: &PanicInfo) -> ! {
-     loop {}
 }
