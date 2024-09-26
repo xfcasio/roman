@@ -9,10 +9,3 @@ use arduino_hal::{ entry, Peripherals, pins, default_serial, delay_ms };
 #[entry]
 fn entry() -> ! {
 }
-
-fn beep<P: PinOps>(pin: &mut Pin<Output, P>, duration: u32, freq: u16) {
-    for _ in 0..duration {
-        pin.toggle();
-        delay_ms(freq);
-    }
-}
